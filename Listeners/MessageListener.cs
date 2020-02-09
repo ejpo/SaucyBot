@@ -14,16 +14,17 @@ namespace SaucyBot
         /**
         *   Hooks into the Message Recieved _client EventHandler
         *   Sends messages to the services that should process the commands
-        *   Differntiates between a 
+        *   Differntiates between a message sent in a normal channel and a DM Channel
         **/
-        public async Task MessageProcessor(SocketMessage message)
+
+        public async Task MessageReceived(SocketMessage message)
         {
-                if (message.Content.Equals("!ping")){
-                    await message.Channel.SendMessageAsync("Pong mudda fucka");
-                //Check to see if the Type IPrivateChannel is inherited by the object message.Channel (Is this a DM?)
-                if(message.Channel is IPrivateChannel){
-                    await message.Channel.SendMessageAsync("Ooh a DM! Making this personal i see?");
-                }
+            if (message.Content.Equals("!ping")){
+                await message.Channel.SendMessageAsync("Pong mudda fucka");
+            }
+            //Check to see if the Type IPrivateChannel is inherited by the object message.Channel (Is this a DM?)
+            if(message.Channel is IPrivateChannel){
+                await message.Channel.SendMessageAsync("Ooh a DM! Making this personal i see?");
             }
         }
     }

@@ -9,15 +9,24 @@ namespace SaucyBot
     {
         private DiscordSocketClient _client;
         private MessageListener _messageListener;
+        private static String token;
+        
         /**
         * @author: Ethan O'Donnell
         * Entrypoint starts imediately in the Main Async context of MainAsync()
         * All bot call will be async so everything running runs in an async context
-        *   
-        *
         **/
         static void Main(string[] args)
-            => new SaucyBotMain().MainAsync().GetAwaiter().GetResult();
+        {
+            //@TODO: Janky token assignment, read from config file or env enviroment. For Dev use only atm!!!
+            if (args.Length > 0){
+                token = args[0];
+            } else {
+                token = null;
+            }
+
+            new SaucyBotMain().MainAsync().GetAwaiter().GetResult();
+        }
 
         /**
         * Main Async thread called by lambda off of main
@@ -48,8 +57,9 @@ namespace SaucyBot
             
             await Login();
             await _client.StartAsync();
-            
         }
+
+        private void token{}
 
         /*
             Method to authenticate the bot to the discord API
@@ -57,6 +67,9 @@ namespace SaucyBot
          */
         private async Task Login()
         {
+            String discordToken;
+            
+            setToken();
             await _client.LoginAsync(TokenType.Bot,Environment.GetEnvironmentVariable("DiscordToken"));
         }
 
@@ -66,7 +79,7 @@ namespace SaucyBot
         private void SubscribeListners()
         {
             _client.Log += Log;
-            _client.MessageReceived += _messageListener.MessageProcessor;
+            _client.MessageReceived += _messageListener.MessageReceived;
         }
 
         /**
