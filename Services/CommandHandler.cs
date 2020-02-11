@@ -1,57 +1,55 @@
-using System.Reflection;
-using System.Threading.Tasks;
-using Discord.WebSocket;
+/**
+    Based heavily on the Discord.Net Example project by Github User Aux
+    https://github.com/Aux/Discord.Net-Example
+
+    Creates a project environemnt simillar to an ASP.NET web app
+**/
 using Discord.Commands;
+using Discord.WebSocket;
+using Microsoft.Extensions.Configuration;
+using System.Threading.Tasks;
+using System;
 
 namespace SaucyBot.Services
 {
-    public class CommandHandler
+       public class CommandHandler
     {
-        private readonly DiscordSocketClient _client;
+        private readonly DiscordSocketClient _discord;
         private readonly CommandService _commands;
+        private readonly IConfigurationRoot _config;
+        private readonly IServiceProvider _provider;
 
-        public CommandHandler(DiscordSocketClient client, CommandService commands)
+        // DiscordSocketClient, CommandService, IConfigurationRoot, and IServiceProvider are injected automatically from the IServiceProvider
+        public CommandHandler(
+            DiscordSocketClient discord,
+            CommandService commands,
+            IConfigurationRoot config,
+            IServiceProvider provider)
         {
+            _discord = discord;
             _commands = commands;
-            _client = client;
+            _config = config;
+            _provider = provider;
 
-            _client.MessageReceived += HandleCommandAsync;
+            _discord.MessageReceived += OnMessageReceivedAsync;
         }
-
-        private async Task HandleCommandAsync(SocketMessage messageParam)
+        
+        private async Task OnMessageReceivedAsync(SocketMessage s)
         {
-            // Don't process the command if it was a system message
-            var message = messageParam as SocketUserMessage;
-            if (message == null) return;
+            var msg = s as SocketUserMessage;     // Ensure the message is from a user/bot
+            if (msg == null) return;
+            if (msg.Author.Id == _discord.CurrentUser.Id) return;     // Ignore self when checking commands
+            
+            var context = new SocketCommandContext(_discord, msg);     // Create the command context
 
-            // Create a number to track where the prefix ends and the command begins
-            int argPos = 0;
+            int argPos = 0;     // Check if the message has a valid command prefix
+            if (msg.HasStringPrefix(_config["prefix"], ref argPos) || msg.HasMentionPrefix(_discord.CurrentUser, ref argPos))
+            {
+                var result = await _commands.ExecuteAsync(context, argPos, _provider);     // Execute the command
 
-            // Determine if the message is a command based on the prefix and make sure no bots trigger commands
-            if (!(message.HasCharPrefix('~', ref argPos) ||
-                message.HasMentionPrefix(_client.CurrentUser, ref argPos)) ||
-                message.Author.IsBot)
-                return;
-
-            // Create a WebSocket-based command context based on the message
-            var context = new SocketCommandContext(_client, message);
-
-            // Execute the command with the command context we just
-            // created, along with the service provider for precondition checks.
-
-            // Keep in mind that result does not indicate a return value
-            // rather an object stating if the command executed successfully.
-            var result = await _commands.ExecuteAsync(
-                context: context,
-                argPos: argPos,
-                services: null);
-
-            // Optionally, we may inform the user if the command fails
-            // to be executed; however, this may not always be desired,
-            // as it may clog up the request queue should a user spam a
-            // command.
-            // if (!result.IsSuccess)
-            // await context.Channel.SendMessageAsync(result.ErrorReason);
+                if (!result.IsSuccess)     // If not successful, reply with the error.
+                    await context.Channel.SendMessageAsync(result.ToString());
+            }
         }
     }
 }
