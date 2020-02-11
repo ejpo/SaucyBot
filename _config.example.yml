@@ -1,0 +1,4 @@
+#Rename this file to _config.yml or simply copy the contents to a new file and adjust as neccesary
+prefix: "!"
+tokens:
+    discord: "APITOKEN GOES HERE"
