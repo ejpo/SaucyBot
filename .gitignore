@@ -1,3 +1,7 @@
+#App Specific Ignores
+_config.yml
+
+#Generic Ignores
 *.swp
 *.*~
 project.lock.json
