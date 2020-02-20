@@ -42,6 +42,7 @@ namespace SaucyBot
             provider.GetRequiredService<Services.LoggingService>();      // Start the logging service
             provider.GetRequiredService<Services.CommandHandler>(); 		// Start the command handler service
             provider.GetRequiredService<Services.TicketingService>();       //Start the ticketing service
+            provider.GetRequiredService<Services.PrivateMessageHandler>();
 
             await provider.GetRequiredService<Services.StartupService>().StartAsync();       // Start the startup service
             await Task.Delay(-1);                               // Keep the program alive
@@ -62,7 +63,8 @@ namespace SaucyBot
             .AddSingleton<Services.CommandHandler>()         // Add the command handler to the collection
             .AddSingleton<Services.StartupService>()         // Add startupservice to the collection
             .AddSingleton<Services.LoggingService>()         // Add loggingservice to the collection
-            .AddSingleton<Services.TicketingService>()       //Add the ticketingservice to the collectionn
+            .AddSingleton<Services.PrivateMessageHandler>()
+            .AddSingleton<Services.TicketingService>()       //Add the ticketingservice to the collection
             .AddSingleton<Random>()                 // Add random to the collection
             .AddSingleton(Configuration);           // Add the configuration to the collection
         }

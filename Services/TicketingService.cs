@@ -4,6 +4,7 @@ using Discord.WebSocket;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using SaucyBot.Events;
 
 namespace SaucyBot.Services
 {
@@ -11,6 +12,7 @@ namespace SaucyBot.Services
     {
         private readonly DiscordSocketClient _discord;
         private readonly CommandService _commands;
+        private readonly PrivateMessageHandler _pmHandler;
 
         private List<SocketUser> _ticketResponders;
 
@@ -21,11 +23,16 @@ namespace SaucyBot.Services
         }
 
         public TicketingService(DiscordSocketClient discord, 
-        CommandService commands)
+        CommandService commands, 
+        PrivateMessageHandler pmHandler)
         {
             _discord = discord;
             _commands = commands;
             _ticketResponders = new List<SocketUser>();
+            _pmHandler = pmHandler;
+
+            _discord.ChannelCreated += OnChannelCreated;
+            
         }
 
         /*
@@ -45,6 +52,16 @@ namespace SaucyBot.Services
             if(_ticketResponders.Contains(responder)){
                 await Task.Run(() => _ticketResponders.Remove(responder));
             }
+        }
+
+        public async Task OnChannelCreated(SocketChannel s){
+            var channel = s as SocketDMChannel;
+
+            await channel.SendMessageAsync("Channel Created");
+        }
+
+        public async Task OnChannelUpdated(SocketChannel s){
+            var channel = s as SocketDMChannel;
         }
     }
 }
