@@ -33,5 +33,11 @@ namespace SaucyBot.Modules
             await _ticketingService.RemoveTicketResponder(Context.Message.Author);
             await ReplyAsync("You have been logged out of the ticketing system.");
         }
+
+        [Command("newTicket")]
+        async Task UserCreateNewChannelAsync()
+        {
+            await _ticketingService.CreateTicketChannelByCommand(Context.Message);
+        }
     }
 }

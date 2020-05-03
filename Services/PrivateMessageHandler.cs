@@ -10,7 +10,6 @@ namespace SaucyBot.Services
     {
         private readonly DiscordSocketClient _discord;
         public event EventHandler<PMArgs> PMRecieved;
-        public event <Func<SocketMessage,Task>> PM;
 
         public PrivateMessageHandler(DiscordSocketClient discord)
         {
@@ -28,19 +27,7 @@ namespace SaucyBot.Services
             if (msg.Channel is ISocketPrivateChannel)
             {
                 await msg.Channel.SendMessageAsync("Private");
-                RaisePMEvent(new PMArgs(msg, msg.Author));
             }
-        }
-
-        protected virtual void RaisePMEvent(PMArgs e)
-        {
-            EventHandler<PMArgs> handler = PMRecieved;
-            
-            
-            if(handler != null){
-                handler(this, e);
-            }
-            
         }
     }
 }

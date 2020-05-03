@@ -54,14 +54,22 @@ namespace SaucyBot.Services
             }
         }
 
-        public async Task OnChannelCreated(SocketChannel s){
+        public async Task OnChannelCreated(SocketChannel s)
+        {
             var channel = s as SocketDMChannel;
 
             await channel.SendMessageAsync("Channel Created");
         }
 
-        public async Task OnChannelUpdated(SocketChannel s){
+        public async Task OnChannelUpdated(SocketChannel s)
+        {
             var channel = s as SocketDMChannel;
+        }
+
+        public async Task CreateTicketChannelByCommand(SocketUserMessage s)
+        {
+            var channel = s.Channel as SocketGuildChannel;
+            await channel.Guild.CreateTextChannelAsync("Test");
         }
     }
 }
