@@ -47,15 +47,19 @@ namespace SaucyBot.Services
             }
         }
 
+        /**
+        *   Signs a Discord user out of ticket notifications
+        */
         public async Task RemoveTicketResponder(SocketUser responder)
         {
             if(_ticketResponders.Contains(responder)){
                 await Task.Run(() => _ticketResponders.Remove(responder));
             }
         }
-
-        public async Task OnChannelCreated(SocketChannel s)
-        {
+        /**
+        * Listener for new 
+        */
+        public async Task OnChannelCreated(SocketChannel s){
             var channel = s as SocketDMChannel;
 
             await channel.SendMessageAsync("Channel Created");
@@ -70,6 +74,5 @@ namespace SaucyBot.Services
         {
             var channel = s.Channel as SocketGuildChannel;
             await channel.Guild.CreateTextChannelAsync("Test");
-        }
-    }
+	}
 }
