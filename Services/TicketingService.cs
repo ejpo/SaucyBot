@@ -47,6 +47,9 @@ namespace SaucyBot.Services
             }
         }
 
+        /**
+        *   Signs a Discord user out of ticket notifications
+        */
         public async Task RemoveTicketResponder(SocketUser responder)
         {
             if(_ticketResponders.Contains(responder)){
@@ -54,6 +57,9 @@ namespace SaucyBot.Services
             }
         }
 
+        /**
+        * Listener for new 
+        */
         public async Task OnChannelCreated(SocketChannel s){
             var channel = s as SocketDMChannel;
 
@@ -62,6 +68,13 @@ namespace SaucyBot.Services
 
         public async Task OnChannelUpdated(SocketChannel s){
             var channel = s as SocketDMChannel;
+        }
+
+        /**
+        * Creates a new ticket channel for a paticular ticket
+        */
+        public async  Task CreateTicketChannel(){
+
         }
     }
 }
