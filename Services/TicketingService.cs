@@ -16,14 +16,16 @@ namespace SaucyBot.Services
 
         private List<SocketUser> _ticketResponders;
 
-        public List<SocketUser> TicketResponders{
-            get{
+        public List<SocketUser> TicketResponders
+        {
+            get
+            {
                 return _ticketResponders;
             }
         }
 
-        public TicketingService(DiscordSocketClient discord, 
-        CommandService commands, 
+        public TicketingService(DiscordSocketClient discord,
+        CommandService commands,
         PrivateMessageHandler pmHandler)
         {
             _discord = discord;
@@ -32,7 +34,7 @@ namespace SaucyBot.Services
             _pmHandler = pmHandler;
 
             _discord.ChannelCreated += OnChannelCreated;
-            
+
         }
 
         /*
@@ -42,7 +44,8 @@ namespace SaucyBot.Services
         */
         public async Task AddTicketResponder(SocketUser responder)
         {
-            if(!(_ticketResponders.Contains(responder))){
+            if (!(_ticketResponders.Contains(responder)))
+            {
                 await Task.Run(() => _ticketResponders.Add(responder));
             }
         }
@@ -52,14 +55,16 @@ namespace SaucyBot.Services
         */
         public async Task RemoveTicketResponder(SocketUser responder)
         {
-            if(_ticketResponders.Contains(responder)){
+            if (_ticketResponders.Contains(responder))
+            {
                 await Task.Run(() => _ticketResponders.Remove(responder));
             }
         }
         /**
         * Listener for new 
         */
-        public async Task OnChannelCreated(SocketChannel s){
+        public async Task OnChannelCreated(SocketChannel s)
+        {
             var channel = s as SocketDMChannel;
 
             await channel.SendMessageAsync("Channel Created");
@@ -74,5 +79,6 @@ namespace SaucyBot.Services
         {
             var channel = s.Channel as SocketGuildChannel;
             await channel.Guild.CreateTextChannelAsync("Test");
-	}
+        }
+    }
 }
