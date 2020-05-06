@@ -9,7 +9,7 @@ using SaucyBot.Shared;
 
 namespace SaucyBot.Ticketing
 {
-    class Responder : IAsyncIntialization
+    public class Responder : IAsyncIntialization
     {
         private SocketUser _identity;
 
