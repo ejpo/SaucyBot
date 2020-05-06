@@ -1,10 +1,7 @@
-using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using SaucyBot.Events;
 using SaucyBot.Ticketing;
 
 namespace SaucyBot.Services
@@ -16,7 +13,7 @@ namespace SaucyBot.Services
         private readonly PrivateMessageHandler _pmHandler;
         private readonly TicketingFactory _factory;
 
-        private List<Responder> _ticketResponders;
+        private Dictionary<ulong,Responder> _ticketResponders;
 
         public TicketingService(DiscordSocketClient discord,
         CommandService commands,
@@ -24,7 +21,7 @@ namespace SaucyBot.Services
         {
             _discord = discord;
             _commands = commands;
-            _ticketResponders = new List<Responder>();
+            _ticketResponders = new Dictionary<ulong,Responder>();
             _factory = new TicketingFactory();
             _pmHandler = pmHandler;
 
@@ -56,8 +53,13 @@ namespace SaucyBot.Services
         public async Task CreateNewRepsponderAsync(SocketUser identity, SocketGuild guild)
         {
             var myResponder = await _factory.CreateResponderAsync(identity, guild);
-            _ticketResponders.Add(myResponder);
-
+            try {
+                _ticketResponders.Add(myResponder.ResponderID, myResponder);
+            }
+            catch {
+                throw new System.Exception("Error adding ticket responder to collection");
+            }
+            
         }
     }
 }
