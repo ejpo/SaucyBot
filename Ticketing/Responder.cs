@@ -69,6 +69,12 @@ namespace SaucyBot.Ticketing
         }
 
         /// <summary>
+        /// Unique ID derived from Discord User UID and Discord Guild UID
+        /// </summary>
+        /// <value>ulong - SaucyBot Responder ID</value>
+        public ulong ResponderID { get { return _responderID; } } 
+
+        /// <summary>
         /// ID for the user that is represented by this Responder object 
         /// </summary>
         /// <value>ulong - discord user uid</value>
