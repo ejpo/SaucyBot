@@ -18,26 +18,16 @@ namespace SaucyBot.Modules
             await ReplyAsync("I will DM you shortly.\nPlease provide me with any extra information you can think of whilst you wait.");
         }
 
-        [Command("ticketLogin")]
-        async Task UserLoginAsync()
-        {
-            var ticketingService1 = _ticketingService;
-            var author = Context.Message.Author;
-            await _ticketingService.AddTicketResponder(Context.Message.Author);
-            await ReplyAsync("You have been logged in to the ticketing system.");
-        }
-
-        [Command("ticketLogout")]
-        async Task UserLogoutAsync()
-        {
-            await _ticketingService.RemoveTicketResponder(Context.Message.Author);
-            await ReplyAsync("You have been logged out of the ticketing system.");
-        }
-
         [Command("newTicket")]
         async Task UserCreateNewChannelAsync()
         {
             await _ticketingService.CreateTicketChannelByCommand(Context.Message);
+        }
+ 
+        [Command("newResponder")]
+        async Task CreateNewResponderAsync()
+        {
+            await _ticketingService.CreateNewRepsponderAsync(Context.Message.Author, Context.Guild);
         }
     }
 }

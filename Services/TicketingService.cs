@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using SaucyBot.Events;
+using SaucyBot.Ticketing;
 
 namespace SaucyBot.Services
 {
@@ -13,14 +14,15 @@ namespace SaucyBot.Services
         private readonly DiscordSocketClient _discord;
         private readonly CommandService _commands;
         private readonly PrivateMessageHandler _pmHandler;
+        private readonly TicketingFactory _factory;
 
-        private List<SocketUser> _ticketResponders;
+        private List<Responder> _ticketResponders;
 
-        public List<SocketUser> TicketResponders
+        public TicketingFactory Factory
         {
             get
             {
-                return _ticketResponders;
+                return _factory;
             }
         }
 
@@ -30,36 +32,13 @@ namespace SaucyBot.Services
         {
             _discord = discord;
             _commands = commands;
-            _ticketResponders = new List<SocketUser>();
+            _ticketResponders = new List<Responder>();
             _pmHandler = pmHandler;
 
             _discord.ChannelCreated += OnChannelCreated;
 
         }
 
-        /*
-            Adds a Discord user to the ticketResponder List.
-            Pre-Condition: The user does not already exist in the list
-            Post-Condition: The user will remain in the list until removed or until the bot restarts
-        */
-        public async Task AddTicketResponder(SocketUser responder)
-        {
-            if (!(_ticketResponders.Contains(responder)))
-            {
-                await Task.Run(() => _ticketResponders.Add(responder));
-            }
-        }
-
-        /**
-        *   Signs a Discord user out of ticket notifications
-        */
-        public async Task RemoveTicketResponder(SocketUser responder)
-        {
-            if (_ticketResponders.Contains(responder))
-            {
-                await Task.Run(() => _ticketResponders.Remove(responder));
-            }
-        }
         /**
         * Listener for new 
         */
@@ -79,6 +58,13 @@ namespace SaucyBot.Services
         {
             var channel = s.Channel as SocketGuildChannel;
             await channel.Guild.CreateTextChannelAsync("Test");
+        }
+
+        public async Task CreateNewRepsponderAsync(SocketUser identity, SocketGuild guild)
+        {
+            var myResponder = await _factory.CreateResponderAsync(identity, guild);
+            _ticketResponders.Add(myResponder);
+
         }
     }
 }
