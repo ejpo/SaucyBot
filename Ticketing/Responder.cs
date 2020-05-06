@@ -26,7 +26,7 @@ namespace SaucyBot.Ticketing
         {
             Initialization = CreateAsync(userID, guildID);
         }
-        
+
         /// <summary>
         /// Property to track whether this object is initialised yet
         /// Used when a Responder is constructed asynchronouly
@@ -48,9 +48,24 @@ namespace SaucyBot.Ticketing
         {
             _userID = userID;
             _guildID = guildID;
+            _responderID = DeriveResponderID();
             _available = false;
             // https://blog.stephencleary.com/2013/01/async-oop-2-constructors.html
             return Task.FromResult<bool>(true);
+        }
+
+        /// <summary>
+        /// Generate a uid derived from the discord user UID and the discord guild UID
+        /// Used to later search for the Responder in the team, doesn't neeed to be foolproof and avoid collision
+        /// </summary>
+        /// <returns></returns>
+        private ulong DeriveResponderID()
+        {
+            ulong uid = 57;
+            uid = uid * _userID / 12;
+            uid = uid * _guildID / 12;
+
+            return uid;
         }
 
         /// <summary>
