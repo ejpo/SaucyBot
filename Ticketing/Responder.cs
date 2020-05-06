@@ -4,36 +4,34 @@
 /// </summary>
 
 using System.Threading.Tasks;
-using Discord.WebSocket;
 using SaucyBot.Shared;
 
 namespace SaucyBot.Ticketing
 {
     public class Responder : IAsyncIntialization
     {
-        private SocketUser _identity;
-
-        //TODO Do we need this?
-        private SocketGuild _server;
-
+        //unique identifier for a responder, calculated based on user ID and server ID
+        private ulong _responderID;
+        private ulong _userID;
+        private ulong _guildID;
         private bool _available;
 
-        private bool _intialized;
-
         /// <summary>
-        /// Availability of the responder to respond to a ticker
+        /// Construcutor for Responders, by default all responders start off as unavailable.
+        /// Unless you know what you are doing, you should create responder objects using an instance of TicketingFactory
         /// </summary>
-        /// <value>Boolean, can or cannot respond (respectively true,false)</value>
-        public bool Available
+        /// <param name="userID">The ulond id for this paticular responders Socket UserObject</param>
+        /// <param name="guildID">The ulong id for the guild that the user is operating in the context of</param>
+        public Responder(ulong userID, ulong guildID)
         {
-            get{
-                return _available;
-            }
-            set{
-                _available = value;
-            }
+            Initialization = CreateAsync(userID, guildID);
         }
-
+        
+        /// <summary>
+        /// Property to track whether this object is initialised yet
+        /// Used when a Responder is constructed asynchronouly
+        /// </summary>
+        /// <value>True when object is ready to be used or False when the object is still being intialised </value>
         public Task<bool> Initialization
         {
             get;
@@ -41,41 +39,41 @@ namespace SaucyBot.Ticketing
         }
 
         /// <summary>
-        /// Constrcutor for Responders, by default all responders start off as unavailable.
+        /// Async helper method to create a new instance of responder
         /// </summary>
-        /// <param name="identity">The SocketUser object for this paticulkar responder</param>
-        /// <param name="server">The guild that the SocketUser will be acting as a repsponder on behalf of</param>
-        public Responder(SocketUser identity, SocketGuild server)
+        /// <param name="userID">discord user UID</param>
+        /// <param name="guildID">discord guild UID</param>
+        /// <returns></returns>
+        private Task<bool> CreateAsync(ulong userID, ulong guildID)
         {
-            Initialization = CreateAsync(identity, server);
-        }
-
-        public Task<bool> CreateAsync(SocketUser identity, SocketGuild server)
-        {
-            _identity = identity;
-            _server = server;
+            _userID = userID;
+            _guildID = guildID;
             _available = false;
             // https://blog.stephencleary.com/2013/01/async-oop-2-constructors.html
             return Task.FromResult<bool>(true);
         }
 
-        public Task<SocketUser> GetAsyncIdentity()
-        {
-            return Task.FromResult<SocketUser>(_identity);
-        }
+        /// <summary>
+        /// ID for the user that is represented by this Responder object 
+        /// </summary>
+        /// <value>ulong - discord user uid</value>
+        public ulong UserID { get { return _userID; } }
 
         /// <summary>
-        /// Getter for Responder Server
+        /// ID for the guild that this user is operating in the context of
         /// </summary>
-        /// <value>SocketGuild that this responder replies on behalf of</value>
-        public SocketGuild Server
-        {
-            get{
-                return _server;
-            }
+        /// <value>ulong - discord guild uid</value>
+        public ulong GuildID { get { return _guildID; } }
+        
+        /// <summary>
+        /// Availability of the responder to respond to a ticket
+        /// </summary>
+        /// <value>Boolean - can or cannot respond (respectively true,false)</value>
+        public bool Available
+        { 
+            get { return _available; } 
+            set { _available = value; }
         }
-
-        //public
 
     }
 }

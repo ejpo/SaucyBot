@@ -18,14 +18,6 @@ namespace SaucyBot.Services
 
         private List<Responder> _ticketResponders;
 
-        public TicketingFactory Factory
-        {
-            get
-            {
-                return _factory;
-            }
-        }
-
         public TicketingService(DiscordSocketClient discord,
         CommandService commands,
         PrivateMessageHandler pmHandler)
@@ -33,6 +25,7 @@ namespace SaucyBot.Services
             _discord = discord;
             _commands = commands;
             _ticketResponders = new List<Responder>();
+            _factory = new TicketingFactory();
             _pmHandler = pmHandler;
 
             _discord.ChannelCreated += OnChannelCreated;
