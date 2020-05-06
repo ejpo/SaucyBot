@@ -54,7 +54,7 @@ namespace SaucyBot.Services
         {
             var myResponder = await _factory.CreateResponderAsync(identity, guild);
             try {
-                _ticketResponders.Add(myResponder.ResponderID, myResponder);
+                _ticketResponders.Add(myResponder.SaucyID, myResponder);
             }
             catch {
                 throw new System.Exception("Error adding ticket responder to collection");
