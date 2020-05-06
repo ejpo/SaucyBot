@@ -4,7 +4,7 @@ namespace SaucyBot.Shared
 {
     interface IAsyncIntialization
     {
-        public Task<bool> Intialization
+        public Task<bool> Initialization
         {
             get;
         }
