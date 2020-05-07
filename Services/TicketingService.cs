@@ -34,19 +34,19 @@ namespace SaucyBot.Services
         */
         public async Task OnChannelCreated(SocketChannel s)
         {
-            var channel = s as SocketDMChannel;
+            var channel = await Task.Run( ()  => ( s as SocketDMChannel)  );
 
             await channel.SendMessageAsync("Channel Created");
         }
 
         public async Task OnChannelUpdated(SocketChannel s)
         {
-            var channel = s as SocketDMChannel;
+            var channel = await Task.Run ( () => ( s as SocketDMChannel ) );
         }
 
         public async Task CreateTicketChannelByCommand(SocketUserMessage s)
         {
-            var channel = s.Channel as SocketGuildChannel;
+            var channel = await Task.Run( () => ( s.Channel as SocketGuildChannel) );
             await channel.Guild.CreateTextChannelAsync("Test");
         }
 
@@ -54,7 +54,7 @@ namespace SaucyBot.Services
         {
             var myResponder = await _factory.CreateResponderAsync(identity, guild);
             try {
-                _ticketResponders.Add(myResponder.SaucyID, myResponder);
+                _ticketResponders.Add(myResponder.SaucyID, myResponder); 
             }
             catch {
                 throw new System.Exception("Error adding ticket responder to collection");
