@@ -11,7 +11,7 @@ namespace SaucyBot.Shared
 
         /// <summary>
         /// Property to track whether this object is initialised yet
-        /// Used when a Responder is constructed asynchronouly
+        /// Used when a derived object is constructed asynchronouly
         /// </summary>
         /// <value>True when object is ready to be used or False when the object is still being intialised </value>
         public Task<bool> Initialization
@@ -21,7 +21,10 @@ namespace SaucyBot.Shared
         }
 
         /// <summary>
-        /// Async helper method to create a new instance of responder
+        /// Async helper method to fill out the inherited fields of a derived object, should contain an overding method that calls this base method
+        /// And uses the overiding method to set it's non-derived fields like a constructor.
+        /// 
+        /// The constructor for a derived method should set Initiailized = CreateAsync(i,k);
         /// </summary>
         /// <param name="userID">discord user UID</param>
         /// <param name="guildID">discord guild UID</param>
@@ -37,7 +40,8 @@ namespace SaucyBot.Shared
 
         /// <summary>
         /// Generate a uid derived from the discord user UID and the discord guild UID
-        /// Used to later search for the Responder in the team, doesn't neeed to be foolproof and avoid collision
+        /// Used to later search for the User in any structs it's stored in, doesn't neeed to be foolproof and avoid collision as
+        /// I think the space for possible UID's is large enough that this won't matter. Might regret this decision
         /// </summary>
         /// <returns></returns>
         protected ulong DeriveSaucyID()
@@ -52,11 +56,11 @@ namespace SaucyBot.Shared
         /// <summary>
         /// Unique ID derived from Discord User UID and Discord Guild UID
         /// </summary>
-        /// <value>ulong - SaucyBot Responder ID</value>
+        /// <value>ulong - SaucyBot Saucy ID</value>
         public ulong SaucyID { get { return _saucyID; } } 
 
         /// <summary>
-        /// ID for the user that is represented by this Responder object 
+        /// ID for the user that is represented by this User object 
         /// </summary>
         /// <value>ulong - discord user uid</value>
         public ulong UserID { get { return _userID; } }
