@@ -9,7 +9,7 @@ namespace SaucyBot.Services
     public class PrivateMessageHandler
     {
         private readonly DiscordSocketClient _discord;
-        public event EventHandler<PMArgs> PMRecieved;
+        //public event EventHandler<PMArgs> PMRecieved;
 
         public PrivateMessageHandler(DiscordSocketClient discord)
         {
