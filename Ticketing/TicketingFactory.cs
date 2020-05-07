@@ -12,7 +12,7 @@ namespace SaucyBot.Ticketing
 
        public async Task<Responder> CreateResponderAsync(SocketUser identity, SocketGuild guild)
        {
-           Responder newResponder = new Responder(identity.Id, guild.Id);
+           var newResponder = await Task.Run( () => ( new Responder(identity.Id, guild.Id) ) );
            await newResponder.Initialization;
            return newResponder;
        }
