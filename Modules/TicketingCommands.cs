@@ -23,11 +23,19 @@ namespace SaucyBot.Modules
         {
             await _ticketingService.CreateTicketChannelByCommand(Context.Message);
         }
- 
+
+        //@Testing - Create a new reposnder for the person who sent this message
         [Command("newResponder")]
         async Task CreateNewResponderAsync()
         {
             await _ticketingService.CreateNewRepsponderAsync(Context.Message.Author, Context.Guild);
+        }
+
+        //@Testing - Create a new team and add the sender as a responder
+        [Command("newTeam")]
+        async Task CreateNewTeamAsync()
+        {
+            await _ticketingService
         }
     }
 }

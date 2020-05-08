@@ -16,5 +16,12 @@ namespace SaucyBot.Ticketing
            await newResponder.Initialization;
            return newResponder;
        }
+
+       public async Task<Team> CreateTeamAsync(string teamName, SocketGuild guild)
+       {
+           var newTeam = await Task.Run( () => ( new Team(teamName, guild.Id) ) );
+           await newTeam.Initialization;
+           return newTeam;
+       }
    }
 }
