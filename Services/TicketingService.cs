@@ -64,7 +64,6 @@ namespace SaucyBot.Services
         public async Task CreateNewTeamAsync(string teamName, SocketGuild guild, SocketUser identity)
         {
             var myTeam = await _factory.CreateTeamAsync(teamName, guild);
-            myTeam.AddResponder(_ticketResponders.GetValueOrDefault(ulong key))
-                ;        }
+        }
     }
 }

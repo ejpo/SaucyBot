@@ -35,7 +35,7 @@ namespace SaucyBot.Modules
         [Command("newTeam")]
         async Task CreateNewTeamAsync()
         {
-            await _ticketingService
+            await _ticketingService.CreateNewTeamAsync("Test", Context.Guild, Context.Message.Author);
         }
     }
 }
