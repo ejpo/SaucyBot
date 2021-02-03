@@ -11,6 +11,8 @@ namespace SaucyBot.Ticketing
         private ulong _guildID;
         private Dictionary<ulong,Responder> _teamResponders;
 
+        public Task<bool> Initialization { get; private set; }
+
         public Team(string name, ulong guildID)
         {
             Initialization = CreateAsync(name, guildID);
@@ -65,6 +67,6 @@ namespace SaucyBot.Ticketing
             }
         }
 
-        public Task<bool> Initialization { get; private set; }
+        
     }
 }

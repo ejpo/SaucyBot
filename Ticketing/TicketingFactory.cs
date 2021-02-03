@@ -23,5 +23,10 @@ namespace SaucyBot.Ticketing
            await newTeam.Initialization;
            return newTeam;
        }
+
+        public async Task<Ticket> CreateTicketAsync()
+        { 
+            
+        }
    }
 }
