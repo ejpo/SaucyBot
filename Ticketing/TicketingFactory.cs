@@ -1,4 +1,5 @@
 using Discord.WebSocket;
+using System;
 using System.Threading.Tasks;
 
 namespace SaucyBot.Ticketing
@@ -25,8 +26,8 @@ namespace SaucyBot.Ticketing
        }
 
         public async Task<Ticket> CreateTicketAsync()
-        { 
-            
+        {
+            throw new NotImplementedException();
         }
    }
 }

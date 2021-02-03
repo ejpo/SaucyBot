@@ -12,6 +12,8 @@ using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+using SaucyBot.Data;
 
 namespace SaucyBot
 {
@@ -50,6 +52,8 @@ namespace SaucyBot
 
         private void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<SaucyBotContext>(); //Setup the database
+
             services.AddSingleton(new DiscordSocketClient(new DiscordSocketConfig
             {                                       // Add discord to the collection
                 LogLevel = LogSeverity.Verbose,     // Tell the logger to give Verbose amount of info

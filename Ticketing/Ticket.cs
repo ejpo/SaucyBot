@@ -5,7 +5,7 @@ using SaucyBot.Interfaces;
 
 namespace SaucyBot.Ticketing
 {
-    class Ticket : IAsyncIntialization
+    public class Ticket : IAsyncIntialization
     {
         private ulong _ticketID;
         private Team _ticketTeam; //Team derived from database by Team ID?
