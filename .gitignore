@@ -1,5 +1,6 @@
 #App Specific Ignores
 _config.yml
+SaucyBot.db
 
 #Generic Ignores
 *.swp
