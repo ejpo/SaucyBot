@@ -8,8 +8,8 @@ namespace SaucyBot.Model.Shared
     class SaucyUserEntity
     {
         [Key]
-        public ulong SaucyUserEntityID;
-        public ulong DiscordID;
-        public ulong GuildID; 
+        public ulong SaucyUserEntityID { get; set; }
+        public ulong DiscordID { get; set; }
+        public ulong GuildID { get; set; }
     }
 }

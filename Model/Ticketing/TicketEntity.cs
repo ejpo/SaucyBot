@@ -8,12 +8,12 @@ namespace SaucyBot.Model.Ticketing
     class TicketEntity
     {
         [Key]
-        public ulong TicketEntityID;
-        public ulong TicketEntityLabelID; // Label appended to channel
-        public ulong TeamEntityID; // Foreign Key to TeamEntitys
-        public int TicketEntityState;
-        public UInt64 TicketEntityChannelID;
-        public DateTime TicketEntityOpenTime;
-        public DateTime TicketEntityCloseTime;
+        public ulong TicketEntityID { get; set; }
+        public ulong TicketEntityLabelID { get; set; } // Label appended to channel
+        public ulong TeamEntityID { get; set; } // Foreign Key to TeamEntitys
+        public int TicketEntityState { get; set; }
+        public UInt64 TicketEntityChannelID { get; set; }
+        public DateTime TicketEntityOpenTime { get; set; }
+        public DateTime TicketEntityCloseTime { get; set; }
     }
 }
