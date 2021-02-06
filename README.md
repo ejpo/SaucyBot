@@ -11,6 +11,7 @@ SaucyBot plans to:
 
 ## Licence
 SaucyBot is an Open Source project licensed under the MIT Licence
+
 Check the LICENCE file for the exact licence text
 
 ## Contributing
