@@ -1,3 +1,10 @@
+/**
+    This file is Licensed under the MIT Licence
+    Copyright (c) 2020 - 2021 Ethan James Patrick O'Donnell
+
+    Authors: ejpo
+**/
+
 /// <summary>
 /// A responder is a Discord user who is responsible for responding to tickets
 /// This class tracks the users Discord Identity, the server that they are acting as a responder on behalf of and that users availability

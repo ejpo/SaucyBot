@@ -1,3 +1,10 @@
+/**
+    This file is Licensed under the MIT Licence
+    Copyright (c) 2020 - 2021 Ethan James Patrick O'Donnell
+
+    Authors: ejpo
+**/
+
 using Discord.WebSocket;
 using System;
 using System.Threading.Tasks;

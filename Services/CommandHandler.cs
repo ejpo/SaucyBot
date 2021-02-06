@@ -1,4 +1,9 @@
 /**
+    This file is Licensed under the MIT Licence
+    Copyright (c) 2020 - 2021 Ethan James Patrick O'Donnell
+
+    Authors: ejpo
+
     Based heavily on the Discord.Net Example project by Github User Aux
     https://github.com/Aux/Discord.Net-Example
 
