@@ -1,3 +1,10 @@
+/**
+    This file is Licensed under the MIT Licence
+    Copyright (c) 2020 - 2021 Ethan James Patrick O'Donnell
+
+    Authors: ejpo
+**/
+
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
@@ -10,6 +17,8 @@ namespace SaucyBot.Ticketing
         private String _teamName;
         private ulong _guildID;
         private Dictionary<ulong,Responder> _teamResponders;
+
+        public Task<bool> Initialization { get; private set; }
 
         public Team(string name, ulong guildID)
         {
@@ -65,6 +74,6 @@ namespace SaucyBot.Ticketing
             }
         }
 
-        public Task<bool> Initialization { get; private set; }
+        
     }
 }

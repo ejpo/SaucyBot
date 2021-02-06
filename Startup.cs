@@ -1,4 +1,9 @@
 /**
+    This file is Licensed under the MIT Licence
+    Copyright (c) 2020 - 2021 Ethan James Patrick O'Donnell
+
+    Authors: ejpo
+
     Based heavily on the Discord.Net Example project by Github User Aux
     https://github.com/Aux/Discord.Net-Example
 
@@ -12,6 +17,8 @@ using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+using SaucyBot.Data;
 
 namespace SaucyBot
 {
@@ -50,6 +57,8 @@ namespace SaucyBot
 
         private void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<SaucyBotContext>(); //Setup the database
+
             services.AddSingleton(new DiscordSocketClient(new DiscordSocketConfig
             {                                       // Add discord to the collection
                 LogLevel = LogSeverity.Verbose,     // Tell the logger to give Verbose amount of info
